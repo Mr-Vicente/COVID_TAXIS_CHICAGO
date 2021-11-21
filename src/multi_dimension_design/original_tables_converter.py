@@ -3,37 +3,43 @@
 #############################
 
 # Python modules
-
+import re
 # Local modules
 from src.utils import write_dict_2_json_file
 
 def process_file_header(header:str):
-    lower_case_header = header.lower()
-    new_header = lower_case_header.replace(" ", "_")
+    lower_case_header = header.lower()[:-1]
+    new_header = re.sub('\s+', '_', lower_case_header)
     new_columns = new_header.split(",")
+    new_columns = {value:i for i,value in enumerate(new_columns)}
     return new_header, new_columns
 
 
-def read_file_header(filename:str):
+def retrieve_first_2_lines(filename:str):
     with open(filename, 'r') as f:
-        return f.readline()
+        return f.readline(), f.readline()
 
-def process_tables(table_names:[str]):
+def process_tables(table_names:[(str,str)]):
     tables_info = {}
-    for table_name in table_names:
-        filename = f"{table_name}"
-        header = read_file_header(filename)
+    for table_name, filename in table_names:
+        header, sample_line = retrieve_first_2_lines(filename)
         new_header, new_columns = process_file_header(header)
         tables_info[table_name] = {
             "header": new_header,
+            "sample": sample_line,
             "columns": new_columns
         }
 
-    write_dict_2_json_file(json_object=tables_info,filename="tables_info",store_dir="../data")
+    filename = 'tables_info'
+    output_dir = "../data"
+    write_dict_2_json_file(json_object=tables_info,filename=filename,store_dir=output_dir)
 
 
 def main():
-    table_names = ["taxi_trips"]
+    table_names = [
+        ("taxi_trips", "../../../datasets/Full_Covid_Taxi_Trips.csv"),
+
+    ]
     process_tables(table_names)
 
 
