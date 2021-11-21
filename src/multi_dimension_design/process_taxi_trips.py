@@ -49,7 +49,7 @@ def main():
         (Table(headers), create_trip_junk_dimension),
         (Table(headers), create_location_grid_dimension),
     ]
-    process_file(PATH,pipeline)
+    process_file(PATH, pipeline)
 
 if __name__ == '__main__':
     main()
