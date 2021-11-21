@@ -9,19 +9,25 @@
 from src.utils import timing_decorator, read_json_file_2_dict
 from src.multi_dimension_design.dimensions import Date, Table
 
-PATH="../../../datasets/Covid_Taxi_Trips.csv"
+PATH="../../../datasets/Full_Covid_Taxi_Trips.csv"
 
 @timing_decorator
 def process_line(line, pipeline_functions):
+    line = line.split(',')[:-1]
     for table, fun in pipeline_functions:
         fun(table, line)
 
 @timing_decorator
 def process_file(filename: str, pipeline):
+    x = 0
     with open(filename, 'r') as f:
         f.readline() # ignore header
         for line in f:
+            x+=1
             process_line(line, pipeline)
+            if x==20:
+                break
+        print(pipeline[0][0].rows)
 
 def create_record_data_dimension(table, line):
     columns = table.header_columns

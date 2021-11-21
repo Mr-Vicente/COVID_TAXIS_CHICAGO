@@ -7,7 +7,7 @@ import datetime
 import holidays
 
 # Local module
-from src.multi_dimension_design.dimensions.utils import WEEKDAY
+from src.multi_dimension_design.dimensions.utils import WEEKDAY, MONTH
 
 class Date:
     """Representing the date dimension in multimodal design"""
@@ -17,13 +17,18 @@ class Date:
     day_of_the_week: WEEKDAY
     is_weekend: bool
     is_holiday: bool
+
     def __init__(self, original_key, date):
+        self.original_key = original_key
         self._parse_date(date)
+
     def _parse_date(self, date):
-        parsed_date = datetime.datetime.strptime(date, "%d/%m/%Y %I:%M:%S %p")
+        print(date)
+        parsed_date = datetime.datetime.strptime(date, "%m/%d/%Y %I:%M:%S %p")
         self.year = parsed_date.year
+        self.month = MONTH(parsed_date.month)
         self.day_of_the_month = parsed_date.day
-        self.day_of_the_week = WEEKDAY[parsed_date.weekday()]
+        self.day_of_the_week = WEEKDAY(parsed_date.weekday())
         self.is_weekend = self.day_of_the_week.is_weekend()
 
         # Select country
@@ -32,6 +37,7 @@ class Date:
 
     def __str__(self):
         return f'{self.year},' \
+               f'{self.month},' \
                f'{self.day_of_the_month},' \
                f'{self.day_of_the_week},' \
                f'{self.is_weekend},' \
