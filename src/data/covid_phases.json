@@ -1,0 +1,52 @@
+{
+  "21-03-2020": {
+    "class": "Phase 1",
+    "description": "Strict Stay-at-Home"
+  },
+  "23-04-2020": {
+    "class": "Phase 2",
+    "description": "Stay-at-Home"
+  },
+  "29-05-2020": {
+    "class": "Phase 3",
+    "description": "Catiously Reopen"
+  },
+  "26-06-2020": {
+    "class": "Phase 4",
+    "description": "Gradually Resume - Tier 0 Mitigation"
+  },
+  "06-11-2020": {
+    "class": "Phase 4",
+    "description": "Gradually Resume - Tier 1 Mitigation"
+  },
+  "20-11-2020": {
+    "class": "Phase 4",
+    "description": "Gradually Resume - Tier 3 Mitigation"
+  },
+  "19-01-2021": {
+    "class": "Phase 4",
+    "description": "Gradually Resume - Tier 2 Mitigation"
+  },
+  "25-01-2021": [
+    {
+      "class": "Phase 4",
+      "description": "Gradually Resume - Tier 1 Mitigation"
+    },
+    {
+      "class": "Phase 1B",
+      "description": "Vaccination"
+    }
+  ],
+  "01-02-2021": {
+    "class": "Phase 4",
+    "description": "Gradually Resume - Tier 0 Mitigation"
+  },
+  "14-05-2021": {
+    "class": "Bridge Phase",
+    "description": "Phase Between 4 and 5"
+  },
+  "11-06-2021": {
+    "class": "Phase 5",
+    "description": "Protect"
+  }
+}
