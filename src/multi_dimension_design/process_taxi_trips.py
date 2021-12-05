@@ -11,19 +11,6 @@ from src.multi_dimension_design.dimensions import Date, Table, Location, Hour
 
 PATH="../../../datasets/Full_Covid_Taxi_Trips.csv"
 
-def read_zip_codes_2():
-    with open('../data/Zip_Codes.csv') as f:
-        zip_codes = []
-        for zip_info in f.readlines()[1:]:
-            zip_info = zip_info.split(',')
-            zip_info[-1] = zip_info[-1].replace('\n', '')
-            poligon_vec = zip_info[:-4]
-            poligon = Location.poligon_str_2_poligon_2(poligon_vec)
-            new_zip_info = [poligon] + zip_info[-3:]
-            zip_codes.append(new_zip_info)
-            print(zip_codes[0])
-        return zip_codes
-
 def read_zip_codes():
     with open('../data/Zip_Codes.csv') as f:
         zip_codes = []
