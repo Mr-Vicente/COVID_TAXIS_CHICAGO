@@ -16,8 +16,19 @@ class Table:
         return next(self.succ)
 
     def insert(self, obj):
-        key = self._next()
-        self.lookup_table[str(key)] = obj.original_key
-        row = f'{key},{str(obj)}\n'
-        self.rows.append(row)
+        str_obj = str(obj)
+        key = -1
+        for row in self.rows:
+            if str_obj in row[-1]:
+                key = row[0]
+                break
+        if key == -1 or len(self.rows) == 0:
+            key = self._next()
+            row = f'{key},{str_obj}\n'
+            self.rows.append((key, row))
+            self.lookup_table[str(key)] = [obj.original_key]
+        else:
+            print(key)
+            print(self.lookup_table[str(key)])
+            self.lookup_table[str(key)] = self.lookup_table[str(key)].append(obj.original_key)
 
