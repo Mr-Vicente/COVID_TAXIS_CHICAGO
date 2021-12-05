@@ -1,15 +1,30 @@
+#############################
+#   Imports and Contants    #
+#############################
 
+# Python modules
+import datetime
 
-class Hour():
+class Hour:
     original_key: str
     hour: int
     minute: int
     is_rush_hour: bool
 
-    def __init__(self, original_key, hour, minute):
+    def __init__(self, original_key, date):
         self.original_key = original_key
-        self.hour = hour
-        self.minute = minute
+        self._parse_date(date)
 
-    def is_rush_hour(self, hour):
-        return (hour >= 7 and hour <= 10) or (hour >= 17 and hour <= 19)
+    def _parse_date(self, date):
+        parsed_date = datetime.datetime.strptime(date, "%m/%d/%Y %I:%M:%S %p")
+        self.hour = parsed_date.hour
+        self.minute = parsed_date.minute
+        self.is_rush_hour = self.rush_hour(self.hour)
+
+    def rush_hour(self, hour):
+        return (7 <= hour <= 10) or (17 <= hour <= 19)
+
+    def __str__(self):
+        return f'{self.hour},' \
+               f'{self.minute},' \
+               f'{self.is_rush_hour},'

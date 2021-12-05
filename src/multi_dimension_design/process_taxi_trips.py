@@ -6,6 +6,7 @@
 # Python modules
 
 # Local modules
+from src.multi_dimension_design.dimensions.hour import Hour
 from src.utils import timing_decorator, read_json_file_2_dict
 from src.multi_dimension_design.dimensions import Date, Table
 
@@ -28,6 +29,18 @@ def process_file(filename: str, pipeline):
             if x==20:
                 break
         print(pipeline[0][0].rows)
+
+def create_record_hour_dimension(table, line):
+    columns = table.header_columns
+    idx_start_time = columns['trip_start_timestamp']
+    idx_end_time = columns['trip_end_timestamp']
+    start_time = line[idx_start_time]
+    end_time = line[idx_end_time]
+    original_key = line[0]
+    start_date = Hour(original_key, start_time)
+    end_date = Hour(original_key, end_time)
+    table.insert(start_date)
+    table.insert(end_date)
 
 def create_record_data_dimension(table, line):
     columns = table.header_columns
@@ -60,6 +73,7 @@ def main():
     headers = tables_info['taxi_trips']['columns']
     pipeline = [
         (Table(headers), create_record_data_dimension),
+        (Table(headers), create_record_hour_dimension),
         (Table(headers), create_trip_junk_dimension),
         (Table(headers), create_location_grid_dimension),
     ]

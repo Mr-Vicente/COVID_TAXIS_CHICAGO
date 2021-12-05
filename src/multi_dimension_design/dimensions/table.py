@@ -17,7 +17,6 @@ class Table:
 
     def insert(self, obj):
         str_obj = str(obj)
-        print("HEREEE: ", str_obj)
         key = -1
         for row in self.rows:
             if str_obj in row[-1]:
