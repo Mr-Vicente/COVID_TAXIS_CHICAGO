@@ -27,4 +27,4 @@ class Hour:
     def __str__(self):
         return f'{self.hour},' \
                f'{self.minute},' \
-               f'{self.is_rush_hour},'
+               f'{self.is_rush_hour}'
