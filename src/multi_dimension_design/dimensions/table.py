@@ -17,18 +17,21 @@ class Table:
 
     def insert(self, obj):
         str_obj = str(obj)
+        print("HEREEE: ", str_obj)
         key = -1
         for row in self.rows:
             if str_obj in row[-1]:
                 key = row[0]
                 break
-        if key == -1 or len(self.rows) == 0:
+
+        if key == -1 or self.lookup_table[str(key)] is None:
             key = self._next()
             row = f'{key},{str_obj}\n'
             self.rows.append((key, row))
             self.lookup_table[str(key)] = [obj.original_key]
         else:
-            print(key)
             print(self.lookup_table[str(key)])
-            self.lookup_table[str(key)] = self.lookup_table[str(key)].append(obj.original_key)
+            temp = self.lookup_table[str(key)]
+            temp.append(obj.original_key)
+            self.lookup_table[str(key)] = temp
 

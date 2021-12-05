@@ -45,14 +45,15 @@ def create_trip_junk_dimension(table, line):
     pass
 
 def create_location_grid_dimension(table, line):
-    columns = table.header_columns
+    pass
+    """columns = table.header_columns
     idx_start_location = columns['trip_start_timestamp']
     idx_end_location = columns['trip_end_timestamp']
     start_time = line[idx_start_location]
     end_time = line[idx_end_location]
     original_key = line[0]
     start_date = Date(original_key, start_time)
-    end_date = Date(original_key, end_time)
+    end_date = Date(original_key, end_time)"""
 
 def main():
     tables_info = read_json_file_2_dict("tables_info", "../data")
