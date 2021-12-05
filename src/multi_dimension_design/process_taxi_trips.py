@@ -7,7 +7,7 @@
 
 # Local modules
 from src.utils import timing_decorator, read_json_file_2_dict
-from src.multi_dimension_design.dimensions import Date, Table, Location, Hour
+from src.multi_dimension_design.dimensions import Date, Table, Location, Hour, Trip_Junk
 
 PATH="../../../datasets/Full_Covid_Taxi_Trips.csv"
 
@@ -40,7 +40,7 @@ def process_file(filename: str, pipeline):
         for line in f:
             x+=1
             process_line(line, pipeline)
-            if x==20:
+            if x==2000:
                 break
         print(pipeline[0][0].rows)
 
@@ -69,7 +69,14 @@ def create_record_data_dimension(table, line):
     table.insert(end_date)
 
 def create_trip_junk_dimension(table, line):
-    pass
+    columns = table.header_columns
+    idx_payment_type = columns['payment_type']
+    idx_company = columns['company']
+    payment_type = line[idx_payment_type]
+    company = line[idx_company]
+    original_key = line[0]
+    trip_junk = Trip_Junk(original_key, payment_type, company)
+    table.insert(trip_junk)
 
 def create_location_dimension(table, line):
     columns = table.header_columns
@@ -94,9 +101,9 @@ def main():
     tables_info = read_json_file_2_dict("tables_info", "../data")
     headers = tables_info['taxi_trips']['columns']
     pipeline = [
-        #(Table(headers), create_record_data_dimension),
-        #(Table(headers), create_record_hour_dimension),
-        #(Table(headers), create_trip_junk_dimension),
+        (Table(headers), create_record_data_dimension),
+        (Table(headers), create_record_hour_dimension),
+        (Table(headers), create_trip_junk_dimension),
         (Table(headers), create_location_dimension),
     ]
     process_file(PATH, pipeline)

@@ -26,7 +26,7 @@ class Date:
         print(date)
         parsed_date = datetime.datetime.strptime(date, "%m/%d/%Y %I:%M:%S %p")
         self.year = parsed_date.year
-        self.month = MONTH(parsed_date.month)
+        self.month = MONTH(parsed_date.month-1)
         self.day_of_the_month = parsed_date.day
         self.day_of_the_week = WEEKDAY(parsed_date.weekday())
         self.is_weekend = self.day_of_the_week.is_weekend()

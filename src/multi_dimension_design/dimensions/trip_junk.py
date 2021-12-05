@@ -10,7 +10,7 @@ from dataclasses import dataclass
 @dataclass
 class Trip_Junk:
     """Representing the junk dimension in multimodal design"""
-    key: int
+    original_key: int
     payment_type: str
     company: str
 
