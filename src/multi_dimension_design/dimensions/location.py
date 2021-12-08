@@ -6,8 +6,7 @@
 
 # Remote modules
 from shapely.geometry import Point
-from shapely.geometry.polygon import Polygon
-from shapely.wkt import dumps, loads
+from shapely.wkt import loads
 
 # Local module
 

@@ -43,3 +43,12 @@ def timing_decorator(func):
         return original_return_val
 
     return wrapper
+
+#############################
+#         helper
+#############################
+
+def chunks(lst, n):
+    """Yield n-sized chunks from lst."""
+    for i in range(0, len(lst)-1, 1):
+        yield lst[i:i + n]

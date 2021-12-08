@@ -38,6 +38,8 @@ def process_file(filename: str, pipeline):
     with open(filename, 'r') as f:
         f.readline() # ignore header
         for line in f:
+            if '2019' in line or '2021' in line:
+                continue
             x+=1
             process_line(line, pipeline)
             if x==2000:
@@ -102,9 +104,9 @@ def main():
     headers = tables_info['taxi_trips']['columns']
     pipeline = [
         (Table(headers), create_record_data_dimension),
-        (Table(headers), create_record_hour_dimension),
-        (Table(headers), create_trip_junk_dimension),
-        (Table(headers), create_location_dimension),
+        #(Table(headers), create_record_hour_dimension),
+        #(Table(headers), create_trip_junk_dimension),
+        #(Table(headers), create_location_dimension),
     ]
     process_file(PATH, pipeline)
 
