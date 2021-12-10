@@ -98,17 +98,22 @@ def create_location_dimension(table, line):
     table.insert(start_location)
     table.insert(end_location)
 
+def write_lookup_tables(pipeline):
+    for table_info in pipeline:
+        table = table_info[0]
+        table.write_lookup_table()
 
 def main():
     tables_info = read_json_file_2_dict("tables_info", "../data")
     headers = tables_info['taxi_trips']['columns']
     pipeline = [
-        (Table(headers), create_record_data_dimension),
+        (Table(headers, 'data_dimension'), create_record_data_dimension),
         #(Table(headers), create_record_hour_dimension),
         #(Table(headers), create_trip_junk_dimension),
         #(Table(headers), create_location_dimension),
     ]
     process_file(PATH, pipeline)
+    write_lookup_tables(pipeline)
 
 if __name__ == '__main__':
     main()

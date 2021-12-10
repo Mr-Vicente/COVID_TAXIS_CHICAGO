@@ -4,9 +4,11 @@
 
 # Python modules
 import itertools
+from src.utils import write_dict_2_json_file
 
 class Table:
-    def __init__(self, header_columns):
+    def __init__(self, header_columns, name):
+        self.name = name
         self.succ = itertools.count()
         self.header_columns = header_columns
         self.rows = []
@@ -33,4 +35,8 @@ class Table:
             temp = self.lookup_table[str(key)]
             temp.append(obj.original_key)
             self.lookup_table[str(key)] = temp
+
+    def write_lookup_table(self):
+        write_dict_2_json_file(self.name, '../lookup_tables')
+        print(f'Look up table {self.name} created with success!! :))')
 
