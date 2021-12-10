@@ -22,6 +22,7 @@ def retrieve_first_2_lines(filename:str):
 def process_tables(table_names:[(str,str)]):
     tables_info = {}
     for table_name, filename in table_names:
+        print(table_name, filename)
         header, sample_line = retrieve_first_2_lines(filename)
         new_header, new_columns = process_file_header(header)
         tables_info[table_name] = {
@@ -29,8 +30,7 @@ def process_tables(table_names:[(str,str)]):
             "sample": sample_line,
             "columns": new_columns
         }
-
-    filename = 'tables_info'
+    filename = f'tables_info'
     output_dir = "../data"
     write_dict_2_json_file(json_object=tables_info,filename=filename,store_dir=output_dir)
 
@@ -38,7 +38,7 @@ def process_tables(table_names:[(str,str)]):
 def main():
     table_names = [
         ("taxi_trips", "../../../datasets/Full_Covid_Taxi_Trips.csv"),
-
+        ("vaccinations", "../data/COVID-19_Vaccinations_by_ZIP_Code.csv"),
     ]
     process_tables(table_names)
 
