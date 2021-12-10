@@ -1,0 +1,62 @@
+{
+    "taxi_trips": {
+        "header": "trip_id,taxi_id,trip_start_timestamp,trip_end_timestamp,trip_seconds,trip_miles,pickup_census_tract,dropoff_census_tract,pickup_community_area,dropoff_community_area,fare,tips,tolls,extras,trip_total,payment_type,company,pickup_centroid_latitude,pickup_centroid_longitude,pickup_centroid_location,dropoff_centroid_latitude,dropoff_centroid_longitude,dropoff_centroid_location",
+        "sample": "7935b3e68ab4d75e6f75ab1747ae673af7a45e01,5d58f628a7d8340722380e52d042fb43ba69ae9e42559ffcfa754703a6b87c0657d99dea71548b0b26976cc6920848eae73db0e15e3a8146ce9941128c6f0ae0,01/05/2019 09:30:00 AM,01/05/2019 09:30:00 AM,190,0.72,17031320100,17031320100,32,32,4.75,2.00,0.00,0.00,7.25,Credit Card,Flash Cab,41.884987192,-87.620992913,POINT (-87.6209929134 41.8849871918),41.884987192,-87.620992913,POINT (-87.6209929134 41.8849871918)\n",
+        "columns": {
+            "trip_id": 0,
+            "taxi_id": 1,
+            "trip_start_timestamp": 2,
+            "trip_end_timestamp": 3,
+            "trip_seconds": 4,
+            "trip_miles": 5,
+            "pickup_census_tract": 6,
+            "dropoff_census_tract": 7,
+            "pickup_community_area": 8,
+            "dropoff_community_area": 9,
+            "fare": 10,
+            "tips": 11,
+            "tolls": 12,
+            "extras": 13,
+            "trip_total": 14,
+            "payment_type": 15,
+            "company": 16,
+            "pickup_centroid_latitude": 17,
+            "pickup_centroid_longitude": 18,
+            "pickup_centroid_location": 19,
+            "dropoff_centroid_latitude": 20,
+            "dropoff_centroid_longitude": 21,
+            "dropoff_centroid_location": 22
+        }
+    },
+    "vaccinations": {
+        "header": "﻿zip_code,date,total_doses_-_daily,total_doses_-_cumulative,1st_dose_-_daily,1st_dose_-_cumulative,1st_dose_-_percent_population,vaccine_series_completed_-_daily,vaccine_series_completed_-_cumulative,vaccine_series_completed_-_percent_population,total_doses_-_daily_-_age_5+,total_doses_-_daily_-_age_12+,total_doses_-_daily_-_age_18+,total_doses_-_daily_-_age_65+,1st_dose_-_daily_-_age_5+,1st_dose_-_daily_-_age_12+,1st_dose_-_daily_-_age_18+,1st_dose_-_daily_-_age_65+,vaccine_series_completed_-_daily_-_age_5+,vaccine_series_completed_-_daily_-_age_12+,vaccine_series_completed_-_daily_-_age_18+,vaccine_series_completed_-_daily_-_age_65+,population,zip_code_location,row_id",
+        "sample": "60601,10/27/2021,91,\"24,781\",22,\"13,314\",0.883,12,\"11,222\",0.744,91,91,91,24,22,22,22,3,12,12,12,0,\"15,083\",POINT (-87.622844 41.886262),60601-20211027\n",
+        "columns": {
+            "﻿zip_code": 0,
+            "date": 1,
+            "total_doses_-_daily": 2,
+            "total_doses_-_cumulative": 3,
+            "1st_dose_-_daily": 4,
+            "1st_dose_-_cumulative": 5,
+            "1st_dose_-_percent_population": 6,
+            "vaccine_series_completed_-_daily": 7,
+            "vaccine_series_completed_-_cumulative": 8,
+            "vaccine_series_completed_-_percent_population": 9,
+            "total_doses_-_daily_-_age_5+": 10,
+            "total_doses_-_daily_-_age_12+": 11,
+            "total_doses_-_daily_-_age_18+": 12,
+            "total_doses_-_daily_-_age_65+": 13,
+            "1st_dose_-_daily_-_age_5+": 14,
+            "1st_dose_-_daily_-_age_12+": 15,
+            "1st_dose_-_daily_-_age_18+": 16,
+            "1st_dose_-_daily_-_age_65+": 17,
+            "vaccine_series_completed_-_daily_-_age_5+": 18,
+            "vaccine_series_completed_-_daily_-_age_12+": 19,
+            "vaccine_series_completed_-_daily_-_age_18+": 20,
+            "vaccine_series_completed_-_daily_-_age_65+": 21,
+            "population": 22,
+            "zip_code_location": 23,
+            "row_id": 24
+        }
+    }
+}
