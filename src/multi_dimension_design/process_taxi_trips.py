@@ -179,7 +179,7 @@ def main():
             table = t.pipeline[i_dimension][0]
             tables.append(table)
         look = Table.merge_tables(tables)
-        print(i_dimension , look)
+        #print(i_dimension , look)
 
 
 if __name__ == '__main__':

@@ -64,9 +64,6 @@ class Table:
         old_2_new_key = {}
         new_look_up = {}
         for table in tables:
-            print("Table name: ", table.name)
-            print("Table rows_helper: ", list(table.rows_helper.items())[:5])
-            print("Table lookup: ", list(table.lookup_table.items())[:5])
             rows_helper = table.rows_helper
             for row in rows_helper:
                 key = old_2_new_key.get(row, None)

@@ -29,7 +29,7 @@ class Location_Grid:
         self.zip_id = zip_info[1]
         self.zip_code = zip_info[2]
         self.zip_shape_area = zip_info[3]
-        self.zip_geometry = zip_info[0]
+        #self.zip_geometry = zip_info[0]
 
     def get_lower_precision(self, coord_unit):
         return round(coord_unit, PRECISION)
@@ -53,6 +53,6 @@ class Location_Grid:
                f'{self.longitude},' \
                f'{self.zip_id},' \
                f'{self.zip_code},' \
-               f'{self.zip_shape_area},' \
-               f'{self.zip_geometry}'
+               f'{self.zip_shape_area}' #\
+               #f'{self.zip_geometry}'
 
