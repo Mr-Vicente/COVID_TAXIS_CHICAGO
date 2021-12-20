@@ -5,14 +5,15 @@
 # Python modules
 import re
 # Local modules
-from src.utils import write_dict_2_json_file
+from src.utils_ import write_dict_2_json_file
 
 def process_file_header(header:str):
+    original_header = header
     lower_case_header = header.lower()[:-1]
     new_header = re.sub('\s+', '_', lower_case_header)
     new_columns = new_header.split(",")
     new_columns = {value:i for i,value in enumerate(new_columns)}
-    return new_header, new_columns
+    return original_header, new_header, new_columns
 
 
 def retrieve_first_2_lines(filename:str):
@@ -24,8 +25,9 @@ def process_tables(table_names:[(str,str)]):
     for table_name, filename in table_names:
         print(table_name, filename)
         header, sample_line = retrieve_first_2_lines(filename)
-        new_header, new_columns = process_file_header(header)
+        original_header, new_header, new_columns = process_file_header(header)
         tables_info[table_name] = {
+            "original_header": original_header,
             "header": new_header,
             "sample": sample_line,
             "columns": new_columns

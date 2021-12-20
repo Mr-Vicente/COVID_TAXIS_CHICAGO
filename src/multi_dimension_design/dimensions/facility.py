@@ -7,7 +7,7 @@ from dataclasses import dataclass
 
 # Local module
 from src.multi_dimension_design.dimensions.location import Location
-from src.multi_dimension_design.dimensions.utils import FACILITY
+from src.multi_dimension_design.dimensions.utils_ import FACILITY
 from src.multi_dimension_design.dimensions.date import Date
 
 

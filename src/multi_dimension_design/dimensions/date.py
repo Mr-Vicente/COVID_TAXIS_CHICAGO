@@ -7,8 +7,10 @@ import datetime
 import holidays
 
 # Local module
-from src.multi_dimension_design.dimensions.utils import WEEKDAY, MONTH
-from src.utils import read_json_file_2_dict, chunks
+from src.multi_dimension_design.dimensions.utils_ import WEEKDAY, MONTH
+from src.utils_ import read_json_file_2_dict, chunks
+
+phases = read_json_file_2_dict('covid_phases', '../data')
 
 class Date:
     """Representing the date dimension in multimodal design"""
@@ -22,11 +24,10 @@ class Date:
 
     def __init__(self, original_key, date):
         self.original_key = original_key
-        self.covid_phases = read_json_file_2_dict('covid_phases', '../data')
+        self.covid_phases = phases
         self._parse_date(date)
 
     def _parse_date(self, date):
-        print(date)
         parsed_date = datetime.datetime.strptime(date, "%m/%d/%Y %I:%M:%S %p")
         self.year = parsed_date.year
         self.month = MONTH(parsed_date.month-1)
@@ -46,6 +47,7 @@ class Date:
         if isinstance(phase, list):
             phase = phase[0]
         return phase.get('class', '')
+
 
     def parse_covid_phases(self, curr_date, covid_phases):
         assert isinstance(covid_phases, dict)

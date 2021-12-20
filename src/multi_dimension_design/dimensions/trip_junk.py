@@ -14,3 +14,8 @@ class Trip_Junk:
     payment_type: str
     company: str
 
+    def __str__(self):
+        return f'{self.payment_type},' \
+               f'{self.company}'
+
+

@@ -32,7 +32,7 @@ class Location:
     @classmethod
     def extract_zip_info(cls, zip_codes, location):
         point = Point(float(location[0]), float(location[1]))
-        print(point)
+        #print(point)
         for zip_info in zip_codes:
             polygon = zip_info[0]
             if polygon.contains(point):
