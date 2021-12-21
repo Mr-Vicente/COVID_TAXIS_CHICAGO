@@ -1,8 +1,8 @@
 {
     "taxi_trips": {
-        "original_header": "Trip ID,Taxi ID,Trip Start Timestamp,Trip End Timestamp,Trip Seconds,Trip Miles,Pickup Census Tract,Dropoff Census Tract,Pickup Community Area,Dropoff Community Area,Fare,Tips,Tolls,Extras,Trip Total,Payment Type,Company,Pickup Centroid Latitude,Pickup Centroid Longitude,Pickup Centroid Location,Dropoff Centroid Latitude,Dropoff Centroid Longitude,Dropoff Centroid  Location\n",
-        "header": "trip_id,taxi_id,trip_start_timestamp,trip_end_timestamp,trip_seconds,trip_miles,pickup_census_tract,dropoff_census_tract,pickup_community_area,dropoff_community_area,fare,tips,tolls,extras,trip_total,payment_type,company,pickup_centroid_latitude,pickup_centroid_longitude,pickup_centroid_location,dropoff_centroid_latitude,dropoff_centroid_longitude,dropoff_centroid_location",
-        "sample": "7935b3e68ab4d75e6f75ab1747ae673af7a45e01,5d58f628a7d8340722380e52d042fb43ba69ae9e42559ffcfa754703a6b87c0657d99dea71548b0b26976cc6920848eae73db0e15e3a8146ce9941128c6f0ae0,01/05/2019 09:30:00 AM,01/05/2019 09:30:00 AM,190,0.72,17031320100,17031320100,32,32,4.75,2.00,0.00,0.00,7.25,Credit Card,Flash Cab,41.884987192,-87.620992913,POINT (-87.6209929134 41.8849871918),41.884987192,-87.620992913,POINT (-87.6209929134 41.8849871918)\n",
+        "original_header": "Trip ID,Taxi ID,Trip Start Timestamp,Trip End Timestamp,Trip Seconds,Trip Miles,Fare,Tips,Tolls,Extras,Trip Total,Payment Type,Company,Pickup Centroid Latitude,Pickup Centroid Longitude,Dropoff Centroid Latitude,Dropoff Centroid Longitude\n",
+        "header": "trip_id,taxi_id,trip_start_timestamp,trip_end_timestamp,trip_seconds,trip_miles,fare,tips,tolls,extras,trip_total,payment_type,company,pickup_centroid_latitude,pickup_centroid_longitude,dropoff_centroid_latitude,dropoff_centroid_longitude",
+        "sample": "7935b3e68ab4d75e6f75ab1747ae673af7a45e01,5d58f628a7d8340722380e52d042fb43ba69ae9e42559ffcfa754703a6b87c0657d99dea71548b0b26976cc6920848eae73db0e15e3a8146ce9941128c6f0ae0,01/05/2019 09:30:00 AM,01/05/2019 09:30:00 AM,190,0.72,4.75,2.00,0.00,0.00,7.25,Credit Card,Flash Cab,41.884987,-87.620993,41.884987,-87.620993\n",
         "columns": {
             "trip_id": 0,
             "taxi_id": 1,
@@ -10,23 +10,17 @@
             "trip_end_timestamp": 3,
             "trip_seconds": 4,
             "trip_miles": 5,
-            "pickup_census_tract": 6,
-            "dropoff_census_tract": 7,
-            "pickup_community_area": 8,
-            "dropoff_community_area": 9,
-            "fare": 10,
-            "tips": 11,
-            "tolls": 12,
-            "extras": 13,
-            "trip_total": 14,
-            "payment_type": 15,
-            "company": 16,
-            "pickup_centroid_latitude": 17,
-            "pickup_centroid_longitude": 18,
-            "pickup_centroid_location": 19,
-            "dropoff_centroid_latitude": 20,
-            "dropoff_centroid_longitude": 21,
-            "dropoff_centroid_location": 22
+            "fare": 6,
+            "tips": 7,
+            "tolls": 8,
+            "extras": 9,
+            "trip_total": 10,
+            "payment_type": 11,
+            "company": 12,
+            "pickup_centroid_latitude": 13,
+            "pickup_centroid_longitude": 14,
+            "dropoff_centroid_latitude": 15,
+            "dropoff_centroid_longitude": 16
         }
     },
     "vaccinations": {

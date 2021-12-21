@@ -4,8 +4,8 @@
 
 # Python modules
 import itertools
-from src.utils_ import write_dict_2_json_file
-
+from src.utils_ import write_dict_2_json_file,create_directory
+from collections import Counter
 class Table:
     def __init__(self, header_columns, name, offset):
         self.name = name
@@ -38,47 +38,46 @@ class Table:
         str_obj = str(obj)
         key = self.rows_helper.get(str_obj, -1)
 
-        if key == -1 or self.lookup_table[str(key)] is None:
+        if key == -1:
             key = self._next()
-            row = f'{key},{str_obj}\n'
             self.rows_helper[str_obj] = key
-            self.rows.append((key, row))
-            self.lookup_table[str(key)] = [obj.original_key]
-        else:
-            #print(self.lookup_table[str(key)])
-            temp = self.lookup_table[str(key)]
-            temp.append(obj.original_key)
-            self.lookup_table[str(key)] = temp
+            self.lookup_table[str(key)] = obj.original_key
 
-    def write_lookup_table(self):
-        write_dict_2_json_file(self.name, '../lookup_tables')
-        print(f'Look up table {self.name} created with success!! :))')
+    def write_own_lookup_table(self):
+        Table.write_lookup_table(self.lookup_table, self.name)
 
-    def write_table(self):
-        with open(f'{self.name}.csv', 'w') as f:
-            for row in self.rows:
-                f.write(row)
+    def write_own_table(self):
+        Table.write_table(self.rows_helper, self.name)
 
     @staticmethod
-    def merge_tables(tables):
-        old_2_new_key = {}
+    def write_lookup_table(look_up, name):
+        write_dict_2_json_file(look_up, name, '../../../lookup_tables')
+        print(f'Look up table {name} created with success!! :))')
+
+    @staticmethod
+    def write_table(rows_helper, name, store_dir='../../../dimensions'):
+        create_directory(store_dir)
+        with open(f'{store_dir}/{name}.csv', 'w') as f:
+            for str_obj, key in rows_helper.items():
+                f.write(f'{key},{str_obj}\n')
+
+    @staticmethod
+    def merge_tables(tables, dimension_name):
+        new_rows_helper = {}
         new_look_up = {}
         for table in tables:
-            rows_helper = table.rows_helper
-            for row in rows_helper:
-                key = old_2_new_key.get(row, None)
-                if not key:
-                    key = rows_helper.get(row, None)
-                    if not key: continue
-                    old_2_new_key[row] = key
+            #print(table.lookup_table)
+            for row, stored_key in table.rows_helper.items():
+                key = new_rows_helper.get(row, None)
+                if key is None:
+                    key = stored_key
+                    new_rows_helper[row] = key
 
-                pks = table.lookup_table.get(key, [])
-                for pk in pks:
-                    keys = new_look_up.get(pk, [])
-                    if keys:
-                        keys.append(key)
-                    else:
-                        new_look_up[pk] = [key]
-        return new_look_up#,old_2_new_key
+                pk = table.lookup_table.get(str(stored_key), -1)
+                key_ = new_look_up.get(str(pk), -1)
+                if key_ == -1:
+                    new_look_up[str(pk)] = [str(key)]
+        Table.write_table(new_rows_helper, dimension_name)
+        Table.write_lookup_table(new_look_up, dimension_name)
 
 

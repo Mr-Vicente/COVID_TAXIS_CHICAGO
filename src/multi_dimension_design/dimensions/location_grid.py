@@ -17,7 +17,6 @@ class Location_Grid:
     original_key: int
     latitude: float
     longitude: float
-    zip_id: int
     zip_code: int
     zip_geometry: list
     zip_shape_area: float
@@ -26,7 +25,6 @@ class Location_Grid:
         self.original_key = original_key
         self.latitude = self.get_lower_precision(float(location[0]))
         self.longitude = self.get_lower_precision(float(location[1]))
-        self.zip_id = zip_info[1]
         self.zip_code = zip_info[2]
         self.zip_shape_area = zip_info[3]
         #self.zip_geometry = zip_info[0]
@@ -51,7 +49,6 @@ class Location_Grid:
     def __str__(self):
         return f'{self.latitude},' \
                f'{self.longitude},' \
-               f'{self.zip_id},' \
                f'{self.zip_code},' \
                f'{self.zip_shape_area}' #\
                #f'{self.zip_geometry}'

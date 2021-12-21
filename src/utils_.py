@@ -15,7 +15,10 @@ import json
 def create_directory(output_dir):
     # Create output directory if needed
     if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
+        try:
+            os.makedirs(output_dir)
+        except FileExistsError as _:
+            return
 
 
 def write_dict_2_json_file(json_object, filename, store_dir='.'):

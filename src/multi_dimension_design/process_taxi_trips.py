@@ -7,6 +7,7 @@
 import csv
 import threading
 import multiprocessing
+import os
 
 # Local modules
 from src.utils_ import timing_decorator, read_json_file_2_dict
@@ -14,8 +15,8 @@ from src.multi_dimension_design.dimensions import Date, Table, Location,Location
 from utils_ import get_number_of_lines
 
 #PATH="../../../datasets/Full_Covid_Taxi_Trips.csv"
-PATH="../../../datasets/3_head_Taxi_Trips.csv"
-import os
+#PATH="../../../datasets/3_head_Taxi_Trips.csv"
+PATH="../../../datasets/Parsed_Col_Full_Covid_Taxi_Trips.csv"
 
 def read_zip_codes():
     with open('../data/Zip_Codes.csv') as f:
@@ -27,22 +28,20 @@ def read_zip_codes():
             poligon = Location.poligon_str_2_poligon(poligon_vec)
             new_zip_info = [poligon] + att_vec
             zip_codes.append(new_zip_info)
-            #print(zip_codes[0])
         return zip_codes
 
 zip_codes = read_zip_codes()
 
 #@timing_decorator
 def process_line(line_number, line, pipeline_functions):
-    #line = line.split(',')[:-1]
     for table, fun in pipeline_functions:
         try:
             fun(table, line)
-        except Exception as _:
-            #print("hey: ", line)
+        except ValueError as _:
+            print("hey: ", line)
             continue
         if line_number % 5000 == 0:
-            print(f'{table.name}: {len(table.rows)} rows')
+            print(f'{table.name}: {len(list(table.rows_helper.keys()))} rows')
             #print(list(table.lookup_table.items())[:5])
 
 @timing_decorator
@@ -67,32 +66,42 @@ def process_file(filename: str, id, offset, upperbound, pipeline):
             if (line_number)%5000 == 0:
                 print(f"=======Thread {id}=======")
                 print("Line Number: ", line_number)
-                print(f'{line_number}/{upperbound-offset} -> {(line_number/(upperbound-offset))*100}%')
+                to_do = upperbound - offset
+                where_now = file_pos-offset
+                print(f'{where_now}/{to_do} -> {(where_now/(to_do))*100}%')
                 print(f"=================")
         #print(pipeline[0][0].rows)
 
-def create_record_hour_dimension(table, line):
+def create_record_hour_dimension_start(table, line):
     columns = table.header_columns
     idx_start_time = columns['trip_start_timestamp']
-    idx_end_time = columns['trip_end_timestamp']
     start_time = line[idx_start_time]
-    end_time = line[idx_end_time]
     original_key = line[0]
     start_date = Hour(original_key, start_time)
-    end_date = Hour(original_key, end_time)
     table.insert(start_date)
-    table.insert(end_date)
 
-def create_record_data_dimension(table, line):
+def create_record_hour_dimension_end(table, line):
     columns = table.header_columns
-    idx_start_time = columns['trip_start_timestamp']
     idx_end_time = columns['trip_end_timestamp']
-    start_time = line[idx_start_time]
     end_time = line[idx_end_time]
     original_key = line[0]
+    end_date = Hour(original_key, end_time)
+    table.insert(end_date)
+
+def create_record_data_dimension_start(table, line):
+    columns = table.header_columns
+    idx_start_time = columns['trip_start_timestamp']
+    start_time = line[idx_start_time]
+    original_key = line[0]
     start_date = Date(original_key, start_time)
-    end_date = Date(original_key, end_time)
     table.insert(start_date)
+
+def create_record_data_dimension_end(table, line):
+    columns = table.header_columns
+    idx_end_time = columns['trip_end_timestamp']
+    end_time = line[idx_end_time]
+    original_key = line[0]
+    end_date = Date(original_key, end_time)
     table.insert(end_date)
 
 def create_trip_junk_dimension(table, line):
@@ -105,22 +114,28 @@ def create_trip_junk_dimension(table, line):
     trip_junk = Trip_Junk(original_key, payment_type, company)
     table.insert(trip_junk)
 
-def create_location_dimension(table, line):
+def create_location_dimension_start(table, line):
     columns = table.header_columns
     idx_start_latitude = columns['pickup_centroid_latitude']
     idx_start_longitude = columns['pickup_centroid_longitude']
-    idx_end_latitude = columns['dropoff_centroid_latitude']
-    idx_end_longitude = columns['dropoff_centroid_longitude']
     start_location = [line[idx_start_longitude], line[idx_start_latitude]]
-    end_location = [line[idx_end_longitude], line[idx_end_latitude]]
     original_key = line[0]
     start_zip_info = Location.extract_zip_info(zip_codes, start_location)
-    end_zip_info = Location.extract_zip_info(zip_codes, end_location)
-    if start_zip_info == "" or end_zip_info == "":
+    if start_zip_info == "":
         return
     start_location = Location_Grid(original_key, start_location, start_zip_info)
-    end_location = Location_Grid(original_key, end_location, end_zip_info)
     table.insert(start_location)
+
+def create_location_dimension_end(table, line):
+    columns = table.header_columns
+    idx_end_latitude = columns['dropoff_centroid_latitude']
+    idx_end_longitude = columns['dropoff_centroid_longitude']
+    end_location = [line[idx_end_longitude], line[idx_end_latitude]]
+    original_key = line[0]
+    end_zip_info = Location.extract_zip_info(zip_codes, end_location)
+    if end_zip_info == "":
+        return
+    end_location = Location_Grid(original_key, end_location, end_zip_info)
     table.insert(end_location)
 
 def write_lookup_tables(pipeline):
@@ -143,11 +158,25 @@ class Taxi_Thread (threading.Thread):
     def run(self):
         process_file(PATH, self.threadID,  self.offset, self.upper_bound, self.pipeline)
 
+class Merge_Taxi_Thread (threading.Thread):
+    def __init__(self, threadID, i_dimension, other_threads_data):
+        threading.Thread.__init__(self)
+        self.threadID = threadID
+        self.i_dimension = i_dimension
+        self.other_threads_data = other_threads_data
+
+    def run(self):
+        tables = []
+        for t in self.other_threads_data:
+            table = t.pipeline[self.i_dimension][0]
+            tables.append(table)
+        Table.merge_tables(tables, tables[0].name)
+
 def main():
     tables_info = read_json_file_2_dict("tables_info", "../data")
     headers = tables_info['taxi_trips']['columns']
     threads = []
-    n_threads = 1#multiprocessing.cpu_count()
+    n_threads = multiprocessing.cpu_count()
     print(f'Number of threads: {n_threads} :))')
     total_lines = 20383376#get_number_of_lines(PATH)
     total_bytes = os.path.getsize(PATH)
@@ -157,10 +186,13 @@ def main():
     for i in range(n_threads):
         offset = 5000*i
         pipeline = [
-            (Table(headers, f'data_dimension_{i}', offset), create_record_data_dimension),
-            (Table(headers, f'hour_dimension_{i}', offset), create_record_hour_dimension),
+            (Table(headers, f'data_dimension_start_{i}', offset), create_record_data_dimension_start),
+            (Table(headers, f'data_dimension_end_{i}', offset), create_record_data_dimension_end),
+            (Table(headers, f'hour_dimension_start_{i}', offset), create_record_hour_dimension_start),
+            (Table(headers, f'hour_dimension_end_{i}', offset), create_record_hour_dimension_end),
             (Table(headers, f'trip_junk_dimension_{i}', offset), create_trip_junk_dimension),
-            (Table(headers, f'location_grid_dimension_{i}', offset), create_location_dimension),
+            (Table(headers, f'location_grid_dimension_start_{i}', offset), create_location_dimension_start),
+            (Table(headers, f'location_grid_dimension_end_{i}', offset), create_location_dimension_end),
         ]
         offset = i * CHUNK_SIZE
         upper_bound = (i + 1) * CHUNK_SIZE
@@ -169,16 +201,16 @@ def main():
         threads.append(thread)
     for t in threads:
         t.join()
-    #write_lookup_tables(pipeline)
-    #write_tables(pipeline)
 
-    n_dimensions = 4
+    n_dimensions = 7
+    dimension_threads = []
     for i_dimension in range(n_dimensions):
-        tables = []
-        for t in threads:
-            table = t.pipeline[i_dimension][0]
-            tables.append(table)
-        look = Table.merge_tables(tables)
+        thread = Merge_Taxi_Thread(i_dimension, i_dimension, threads)
+        thread.start()
+        dimension_threads.append(thread)
+    for t in dimension_threads:
+        t.join()
+
         #print(i_dimension , look)
 
 
