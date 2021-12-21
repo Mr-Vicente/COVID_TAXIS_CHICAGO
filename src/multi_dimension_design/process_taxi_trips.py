@@ -15,8 +15,8 @@ from src.multi_dimension_design.dimensions import Date, Table, Location,Location
 from utils_ import get_number_of_lines
 
 #PATH="../../../datasets/Full_Covid_Taxi_Trips.csv"
-PATH="../../../datasets/3_head_Taxi_Trips.csv"
-#PATH="../../../datasets/Parsed_Col_Full_Covid_Taxi_Trips.csv"
+#PATH="../../../datasets/3_head_Taxi_Trips.csv"
+PATH="../../../datasets/Parsed_Col_Full_Covid_Taxi_Trips.csv"
 
 def read_zip_codes():
     with open('../data/Zip_Codes.csv') as f:
