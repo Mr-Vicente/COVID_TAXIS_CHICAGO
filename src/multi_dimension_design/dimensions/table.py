@@ -49,9 +49,17 @@ class Table:
     def write_own_table(self):
         Table.write_table(self.rows_helper, self.name)
 
+    #@staticmethod
+    #def write_lookup_table(look_up, name):
+    #    write_dict_2_json_file(look_up, name, '../../../lookup_tables')
+    #    print(f'Look up table {name} created with success!! :))')
+
     @staticmethod
-    def write_lookup_table(look_up, name):
-        write_dict_2_json_file(look_up, name, '../../../lookup_tables')
+    def write_lookup_table(look_up, name, store_dir='../../../lookup_tables'):
+        create_directory(store_dir)
+        with open(f'{store_dir}/{name}.csv', 'w') as f:
+            for p_key,sk in look_up.items():
+                f.write(f'{p_key},{sk}\n')
         print(f'Look up table {name} created with success!! :))')
 
     @staticmethod
@@ -76,7 +84,7 @@ class Table:
                 pk = table.lookup_table.get(str(stored_key), -1)
                 key_ = new_look_up.get(str(pk), -1)
                 if key_ == -1:
-                    new_look_up[str(pk)] = [str(key)]
+                    new_look_up[str(pk)] = str(key)
         Table.write_table(new_rows_helper, dimension_name)
         Table.write_lookup_table(new_look_up, dimension_name)
 

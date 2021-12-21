@@ -39,8 +39,8 @@ def process_tables(table_names:[(str,str)]):
 
 def main():
     table_names = [
-        ("taxi_trips", "../../../datasets/Parsed_Col_Full_Covid_Taxi_Trips.csv"),
-        #("taxi_trips", "../../../datasets/Full_Covid_Taxi_Trips.csv"),
+        #("taxi_trips", "../../../datasets/Parsed_Col_Full_Covid_Taxi_Trips.csv"),
+        ("taxi_trips", "../../../datasets/Full_Covid_Taxi_Trips.csv"),
         ("vaccinations", "../data/COVID-19_Vaccinations_by_ZIP_Code.csv"),
     ]
     process_tables(table_names)
