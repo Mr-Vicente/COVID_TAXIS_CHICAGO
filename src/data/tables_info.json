@@ -2,7 +2,7 @@
     "taxi_trips": {
         "original_header": "Trip ID,Taxi ID,Trip Start Timestamp,Trip End Timestamp,Trip Seconds,Trip Miles,Fare,Tips,Tolls,Extras,Trip Total,Payment Type,Company,Pickup Centroid Latitude,Pickup Centroid Longitude,Dropoff Centroid Latitude,Dropoff Centroid Longitude\n",
         "header": "trip_id,taxi_id,trip_start_timestamp,trip_end_timestamp,trip_seconds,trip_miles,fare,tips,tolls,extras,trip_total,payment_type,company,pickup_centroid_latitude,pickup_centroid_longitude,dropoff_centroid_latitude,dropoff_centroid_longitude",
-        "sample": "7935b3e68ab4d75e6f75ab1747ae673af7a45e01,5d58f628a7d8340722380e52d042fb43ba69ae9e42559ffcfa754703a6b87c0657d99dea71548b0b26976cc6920848eae73db0e15e3a8146ce9941128c6f0ae0,01/05/2019 09:30:00 AM,01/05/2019 09:30:00 AM,190,0.72,4.75,2.00,0.00,0.00,7.25,Credit Card,Flash Cab,41.884987,-87.620993,41.884987,-87.620993\n",
+        "sample": "1c13085acfa3bde953de931f7c0d0b5905a75959,2780ead18beaa862cc67315ddabd9d1acaadcd6da82eba38b064d7d6f4acc260b68ef1ae3ce06dad845178107940b3493fa99640f0f70c25d15cf57336ab7b8f,10/01/2021 12:00:00 AM,10/01/2021 12:15:00 AM,1267,7.08,20.50,0.00,0.00,0.00,20.50,Cash,Flash Cab,41.96581197,-87.65587879,41.95402765,-87.76339903\n",
         "columns": {
             "trip_id": 0,
             "taxi_id": 1,
