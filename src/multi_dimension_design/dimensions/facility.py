@@ -42,7 +42,7 @@ class Facility:
         zip_info = Location.extract_zip_info(zip_codes, temp_coords)
 
         try:
-            temp_location = Location_Grid(original_key, temp_coords, zip_info)
+            temp_location = Location(original_key, temp_coords, zip_info)
         except:
             print("----------------------------" + name + "-----------------------------------")
 
@@ -51,7 +51,7 @@ class Facility:
 
     def __str__(self):
         return f'{self.original_key},' \
-               f'{self.name},' \
+               f'"{self.name}",' \
                f'{self.facility_type.value},' \
-               f'{self.location},'
+               f'{self.location}'
 

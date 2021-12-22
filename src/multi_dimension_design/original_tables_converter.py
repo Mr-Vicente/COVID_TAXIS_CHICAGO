@@ -43,6 +43,11 @@ def main():
         #("taxi_trips", "../../../datasets/Full_Covid_Taxi_Trips.csv"),
         ("taxi_trips", "../../../datasets/Shorter_Col_Sorted_Taxi_Trips.csv"),
         ("vaccinations", "../data/COVID-19_Vaccinations_by_ZIP_Code.csv"),
+        ("clinics", "../data/Clinics.csv"),
+        ("hospitals", "../data/Hospitals.csv"),
+        ("test_sites", "../data/Test_Sites.csv"),
+        ("vax_sites", "../data/Vax_Sites.csv"),
+
     ]
     process_tables(table_names)
 

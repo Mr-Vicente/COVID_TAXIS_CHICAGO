@@ -10,7 +10,7 @@ from shapely.wkt import loads
 import csv
 from src.utils_ import read_json_file_2_dict
 from src.multi_dimension_design.dimensions.utils_ import FACILITY
-from src.multi_dimension_design.dimensions import Date, Table, Hour, Trip_Junk, Vax_Site, Facility
+from src.multi_dimension_design.dimensions import Date, Table, Hour, Trip_Junk, Facility
 import itertools
 
 PATH_clinics = "../data/Clinics.csv"

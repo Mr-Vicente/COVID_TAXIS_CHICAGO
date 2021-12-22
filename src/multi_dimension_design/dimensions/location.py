@@ -46,10 +46,8 @@ class Location:
     def __str__(self):
         return f'{self.latitude},' \
                f'{self.longitude},' \
-               f'{self.zip_id},' \
                f'{self.zip_code},' \
-               f'{self.zip_shape_area},' \
-               f'{self.zip_geometry}'
+               f'{self.zip_shape_area}'
 
 
 

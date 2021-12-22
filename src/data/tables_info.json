@@ -54,5 +54,86 @@
             "zip_code_location": 23,
             "row_id": 24
         }
+    },
+    "clinics": {
+        "original_header": "SITE NAME,HOURS OF OPERATION,ADDRESS,CITY,STATE,ZIP,PHONE,WEBSITE,SERVICES,LOCATION\n",
+        "header": "site_name,hours_of_operation,address,city,state,zip,phone,website,services,location",
+        "sample": "Lower West Neighborhood Health Clinic,Mon - Fri: 8:00 am – 4:00 pm.,1713 S. Ashland Ave.,Chicago,IL,60608,312-746-5157,http://www.cityofchicago.org/city/en/depts/cdph/supp_info/clinical_health/community_healthclinics.html,\"Adults, Children, Family Case Management, Immigration Physicals, Medication Assistance, Pregnancy Testing, Pregnant Women, Women seeking Birth Control\",POINT (-87.6660674613758 41.85859418201153)\n",
+        "columns": {
+            "site_name": 0,
+            "hours_of_operation": 1,
+            "address": 2,
+            "city": 3,
+            "state": 4,
+            "zip": 5,
+            "phone": 6,
+            "website": 7,
+            "services": 8,
+            "location": 9
+        }
+    },
+    "hospitals": {
+        "original_header": "﻿BLDGID,location,BLDGNOTES,LABEL,FACILITY,CITY,ADDRESS,COMMONNAME,TYPE1,TYPE2,TYPE3,PARENTORG,DTOPEN,DTCLOSE,CA2,USE,EDITDATE,ZIP,WARD,TRACT,AREA_NUMBE,COMMUNITY\n",
+        "header": "﻿bldgid,location,bldgnotes,label,facility,city,address,commonname,type1,type2,type3,parentorg,dtopen,dtclose,ca2,use,editdate,zip,ward,tract,area_numbe,community",
+        "sample": "34142,00000;POINT (-87.6930856 41.96167);;Kindred- Lakeshore;Kindred Hospital - Chicago Lakeshore;Chicago;6130 N. Sheridan;Kindred Hospital - Chicago Lakeshore;HOSPITAL;NONPROFIT;;Kindred Healthcare;;;77,00000;Hospitals;10/08/2007;60660;48;030100;77;EDGEWATER\n",
+        "columns": {
+            "﻿bldgid": 0,
+            "location": 1,
+            "bldgnotes": 2,
+            "label": 3,
+            "facility": 4,
+            "city": 5,
+            "address": 6,
+            "commonname": 7,
+            "type1": 8,
+            "type2": 9,
+            "type3": 10,
+            "parentorg": 11,
+            "dtopen": 12,
+            "dtclose": 13,
+            "ca2": 14,
+            "use": 15,
+            "editdate": 16,
+            "zip": 17,
+            "ward": 18,
+            "tract": 19,
+            "area_numbe": 20,
+            "community": 21
+        }
+    },
+    "test_sites": {
+        "original_header": "Facility,Phone,Address,Web Site,Location\n",
+        "header": "facility,phone,address,web_site,location",
+        "sample": "Heartland Health Center - Edgewater,(773) 751-7800,\"1300 W Devon Ave Chicago, IL 60660\",https://www.heartlandhealthcenters.org/covid-19-testing-free-no-insurance/,POINT (-87.66321200000002 41.99816700000001)\n",
+        "columns": {
+            "facility": 0,
+            "phone": 1,
+            "address": 2,
+            "web_site": 3,
+            "location": 4
+        }
+    },
+    "vax_sites": {
+        "original_header": "Facility ID,Facility Name,Address 1,Address 2,City,State,Postal Code,Country,URL,Phone,Begin Date,End Date,Active,City Operated,Notes,Location\n",
+        "header": "facility_id,facility_name,address_1,address_2,city,state,postal_code,country,url,phone,begin_date,end_date,active,city_operated,notes,location",
+        "sample": "94,Roseland Community Hospital,45 W 111th St,,Chicago,IL,60628,United States of America,http://www.roselandhospital.org/,(773) 995-3000,01/01/2021,12/31/2021,true,false,,POINT (-87.624734 41.692562)\n",
+        "columns": {
+            "facility_id": 0,
+            "facility_name": 1,
+            "address_1": 2,
+            "address_2": 3,
+            "city": 4,
+            "state": 5,
+            "postal_code": 6,
+            "country": 7,
+            "url": 8,
+            "phone": 9,
+            "begin_date": 10,
+            "end_date": 11,
+            "active": 12,
+            "city_operated": 13,
+            "notes": 14,
+            "location": 15
+        }
     }
 }
