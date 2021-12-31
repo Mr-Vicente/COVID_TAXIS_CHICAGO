@@ -8,7 +8,7 @@
 # Local modules
 from src.utils_ import timing_decorator, read_json_file_2_dict, create_directory
 from src.multi_dimension_design.dimensions.utils_ import FACILITY
-from src.multi_dimension_design.dimensions import Date, Table, Location, Hour, Trip_Junk, Vax_Site
+from src.multi_dimension_design.dimensions import Date, Table, Location, Hour, Trip_Junk, Vax_Site, Location_Grid
 import itertools
 import csv
 from shapely.wkt import loads
@@ -51,24 +51,24 @@ def process_line(line, pipeline_functions,  fact_table):
     sgs = []
 
     for table, fun in pipeline_functions:
-        #try:
         sg = fun(table, line, sgs)
         if sg == -1:
             return
 
         sgs.append(str(sg))
-        #except Exception as _:
-           # print("hey: ", line)
-            #continue
 
-    pk = line[0]
-    sgs_str = ','.join(sgs)
-    #fact_table.write(f'{pk},{sgs_str}\n')
+    fact_table.write(sgs[-1])
+
 
 def process_file(filename: str, fact_table, pipeline):
-    with open(filename, 'r') as f:
+    with open(filename, 'r', encoding = "ISO-8859-1") as f:
         f.readline() # ignore header
         reader = csv.reader(f)
+
+        line = create_header()
+
+        fact_table.write(line)
+
         for line_number, line in enumerate(reader):
             process_line(line, pipeline, fact_table)
 
@@ -84,30 +84,55 @@ def create_record_data_dimension(table, line, sgs):
     sg = table.insert(start_date)
     return sg
 
-def create_record_location_dimension(table, line, sgs):
+
+def aux_location_dimension(table, line):
     columns = table.header_columns
 
-    idx_id = columns['row_id']
     idx_location = columns['zip_code_location']
     location = line[idx_location]
-    original_key = line[idx_id]
 
     try:
         location = loads(location)
     except:
         print("----------------------------" + "rip" + "-----------------------------------")
-        return - 1;
+        return -1, -1;
 
     temp_coords = [location.x, location.y]
     zip_info = Location.extract_zip_info(zip_codes, temp_coords)
 
+    return temp_coords, zip_info
+
+def create_record_location_dimension(table, line, sgs):
+    columns = table.header_columns
+
+    idx_id = columns['row_id']
+    original_key = line[idx_id]
+
+    temp_coords, zip_info = aux_location_dimension(table, line)
     try:
-        temp_location = Location(original_key, temp_coords, zip_info)
+        location = Location(original_key, temp_coords, zip_info)
     except:
         print("___________________________________" + "rip" + "___________________________________")
         return - 1;
 
-    sg = table.insert(temp_location)
+    sg = table.insert(location)
+    return sg
+
+
+def create_record_location_grid_dimension(table, line, sgs):
+    columns = table.header_columns
+
+    idx_id = columns['row_id']
+    original_key = line[idx_id]
+
+    temp_coords, zip_info = aux_location_dimension(table, line)
+    try:
+        location_grid = Location_Grid(original_key, temp_coords, zip_info)
+    except:
+        print("___________________________________" + "rip" + "___________________________________")
+        return - 1;
+
+    sg = table.insert(location_grid)
     return sg
 
 def process_vac(table, line, sgs):
@@ -118,27 +143,34 @@ def process_vac(table, line, sgs):
     idx_1st_doses = columns['1st_dose_-_daily']
     idx_vaccine_series_completed = columns['vaccine_series_completed_-_daily']
 
-
     date = sgs[0]
+
     total_doses = line[idx_total_doses]
+    total_doses = str(total_doses).replace(',', '')
+
     fst_doses = line[idx_1st_doses]
+    fst_doses = str(fst_doses).replace(',', '')
+
     vaccine_series_completed = line[idx_vaccine_series_completed]
+    vaccine_series_completed = str(vaccine_series_completed).replace(',', '')
+
     id_id = line[idx_id]
     location = sgs[1]
+   # location_grid = sgs[2]
 
     if str(id_id).__contains__("Unknown"):
         return
 
     line = f'{id_id},' \
-           f'{date},' \
-           f'{total_doses},' \
-           f'{fst_doses},' \
-           f'{vaccine_series_completed},' \
-           f'{location}\n'
-
-    print(line)
+            f'{date},' \
+            f'{total_doses},' \
+            f'{fst_doses},' \
+            f'{vaccine_series_completed},' \
+            f'{location}\n'
+            #f'{location_grid}\n'
 
     array.append(line)
+    return line
 
 def write_file(filename, file):
     with open(filename, 'w') as f:
@@ -164,6 +196,18 @@ def attrib_id(table, line, counter_curr):
 
     array.append(x)
 
+
+def create_header():
+    line = 'vax_id,' \
+           'date,' \
+           'total_doses,' \
+           'first_doses,' \
+           'vaccine_series_completed,' \
+           'location\n'
+           #'location_grid\n'
+
+    return line
+
 def main():
     tables_info = read_json_file_2_dict("tables_info", "../data")
     headers = tables_info['vaccinations']['columns']
@@ -174,6 +218,7 @@ def main():
         pipeline = [
             (Table(headers, f'data_dimension', 0), create_record_data_dimension),
             (Table(headers, f'location_dimension', 0), create_record_location_dimension),
+            #(Table(headers, f'location_grid_dimension', 0), create_record_location_grid_dimension),
             (headers, process_vac)
         ]
         process_file(PATH, f, pipeline)
