@@ -48,9 +48,3 @@ class Location:
                f'{self.longitude},' \
                f'{self.zip_code},' \
                f'{self.zip_shape_area}'
-
-
-
-
-
-

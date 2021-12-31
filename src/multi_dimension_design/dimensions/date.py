@@ -22,13 +22,13 @@ class Date:
     is_holiday: bool
     pandemic_phase: str
 
-    def __init__(self, original_key, date):
+    def __init__(self, original_key, date, format_data='%m/%d/%Y %I:%M:%S %p'):
         self.original_key = original_key
         self.covid_phases = phases
-        self._parse_date(date)
+        self._parse_date(date, format_data)
 
-    def _parse_date(self, date):
-        parsed_date = datetime.datetime.strptime(date, "%m/%d/%Y %I:%M:%S %p")
+    def _parse_date(self, date, format_data):
+        parsed_date = datetime.datetime.strptime(date, format_data)
         self.year = parsed_date.year
         self.month = MONTH(parsed_date.month-1)
         self.day_of_the_month = parsed_date.day
